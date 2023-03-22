@@ -1,0 +1,8 @@
+.AppHeader{
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: auto;
+    border-bottom: 1px solid rgba(red, green, blue, alpha);
+}
