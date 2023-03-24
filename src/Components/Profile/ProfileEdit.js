@@ -39,15 +39,25 @@ const cityList = ["Colombo", "Kandy", "Galle", "Jaffna", "Anuradhapura", "Badull
 
 
 
-function SignUp() {
+function ProfileEdit() {
+
+    const { isSignIn, signInError,userInfomation } = useSelector((state) => state.user)
+    const initialValues = {
+        name: userInfomation.name,
+        password: '',
+        email: userInfomation.email,
+        selectedCity:userInfomation.city,
+        noOfSeats:userInfomation.totalSeats
+
+      };
 
   //  const [noOfSeats, setNoOfSeats] = useState(null);
     //const [selectedCity, setSelectedCity] = useState(null);
-    const [name, setName] = useState("");
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
+    const [name, setName] = useState(userInfomation.name);
+    const [password, setPassword] = useState(userInfomation.password);
+    const [email, setEmail] = useState(userInfomation.email);
 
-    const { isSignIn, signInError } = useSelector((state) => state.user)
+    console.log(name,password,email)
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -70,7 +80,7 @@ function SignUp() {
             city: values.selectedCity
         }
         console.log(data)
-        dispatch(UserActions.userSignUp(data))
+        dispatch(UserActions.profileUpdate(data,userInfomation.cinemaId))
     
 
     }
@@ -83,18 +93,19 @@ function SignUp() {
         }
       };
 
-  
+    
+
+   
     return (
         <>
-            <div>
-                <Welcomeheader />
-            </div>
+        
+            
             <div style={cardContainerStyle}>
                 <Space direction="vertical" size={30} align="center">
 
                     <Card
-                        title="Register"
-                        extra={<a href="/">Login</a>}
+                        title="Update Your details"
+                        
                         style={{
                             width: 1000,
                             xs: {
@@ -110,7 +121,7 @@ function SignUp() {
                                 layout="horizontal"
 
                                 style={{ maxWidth: 800 }}
-
+                                initialValues={initialValues}
                                 onFinish={onFinish}
                                 onFinishFailed={onFinishFailed}
                                 autoComplete="off"
@@ -197,18 +208,18 @@ function SignUp() {
 
 
 
-                                {/* <Form.Item label="Upload" valuePropName="fileList">
+                                <Form.Item label="Upload" valuePropName="fileList">
                                     <Upload action="/upload.do" listType="picture-card">
                                         <div>
                                             <PlusOutlined />
                                             <div style={{ marginTop: 8 }}>Upload</div>
                                         </div>
                                     </Upload>
-                                </Form.Item> */}
+                                </Form.Item>
 
                                 <Form.Item label="Button">
                                     <Button type="primary" htmlType="submit" >
-                                        Register
+                                        Update
                                     </Button>
                                 </Form.Item>
                                 {signInError ? <Text wrapperCol={{
@@ -219,13 +230,13 @@ function SignUp() {
 
                         </div>
                     </Card>
-                    
+                    =
                 </Space>
             </div>
         </>
     );
 };
 
-export default SignUp;
+export default ProfileEdit;
 
 

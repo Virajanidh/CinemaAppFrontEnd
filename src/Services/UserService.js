@@ -1,3 +1,6 @@
+import { APIHandler } from "../Handlers/APIHandler";
+
+
 export const signIn = async (username,password) => {
 
   
@@ -40,20 +43,28 @@ export const signIn = async (username,password) => {
       throw new Error(error);
     }
   };
-  
-  /*
-  
-  const params = {
-  key1: 'value1',
-  key2: 'value2'
-};
 
-fetch('https://example.com/api', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify(params)
-});
+  export const profileUpdateService = async (data,id) => {
 
-  */
+   
+      // const username=data.email
+      // const password="password"
+      const cinemaId=parseInt(id)
+      const queryString = new URLSearchParams(data).toString();
+    try {
+      const response = await fetch(`http://localhost:8080/login/profile/${cinemaId}`, {
+        method: 'PUT',
+        // headers: {
+        //   'Content-Type': 'application/json',
+        //   'Authorization': `Basic ${btoa(`${username}:${password}`)}`,
+        // },
+        headers:APIHandler.getHeaderWithPasswordAuth(),
+        body: JSON.stringify(data)
+      });
+      const resdata = await response.json();
+      return resdata;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  
