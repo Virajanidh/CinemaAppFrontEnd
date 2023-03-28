@@ -4,6 +4,7 @@ import Welcomeheader from "../Headers/WelcomeHeader";
 import { UserActions } from '../../Actions/UserActions';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch ,useSelector} from "react-redux";
+import DataHandler from '../../Handlers/DataHandler';
 
 import {
     Form,
@@ -20,7 +21,8 @@ import {
     Upload,
     Card, Space,
     Tag,
-    Typography
+    Typography,
+    Alert
 } from 'antd';
 import SignIn from '../SignIn';
 import Home from '../Home';
@@ -56,6 +58,7 @@ function ProfileEdit() {
     const [name, setName] = useState(userInfomation.name);
     const [password, setPassword] = useState(userInfomation.password);
     const [email, setEmail] = useState(userInfomation.email);
+    const [oldPassword,setPassword2]=useState("")
 
     console.log(name,password,email)
 
@@ -92,8 +95,15 @@ function ProfileEdit() {
           callback();
         }
       };
+      const checkOldPassword = (rule, value, callback) => {
+        if (DataHandler.getFromSession('password')!=value) {
+          callback('Incorrect Password');
+        } else {
+          callback();
+        }
+      };
 
-    
+      
 
    
     return (
@@ -191,7 +201,22 @@ function ProfileEdit() {
                                 </Form.Item >
 
                                 <Form.Item
-                                    label="Password"
+                                    label="Old Password"
+                                    name="oldPassword"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            validator: checkOldPassword
+                                            //message: 'Please input your old password!',
+                                        },
+                                    ]}
+                                >
+                                    <Input.Password value={password}
+                                        onChange={(e) => setPassword2(e.target.value)} />
+                                </Form.Item>
+                               
+                                <Form.Item
+                                    label="New Password"
                                     name="password"
                                     rules={[
                                         {
@@ -208,14 +233,14 @@ function ProfileEdit() {
 
 
 
-                                <Form.Item label="Upload" valuePropName="fileList">
+                                {/* <Form.Item label="Upload" valuePropName="fileList">
                                     <Upload action="/upload.do" listType="picture-card">
                                         <div>
                                             <PlusOutlined />
                                             <div style={{ marginTop: 8 }}>Upload</div>
                                         </div>
                                     </Upload>
-                                </Form.Item>
+                                </Form.Item> */}
 
                                 <Form.Item label="Button">
                                     <Button type="primary" htmlType="submit" >

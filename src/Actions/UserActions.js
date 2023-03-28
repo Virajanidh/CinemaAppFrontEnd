@@ -1,12 +1,13 @@
 import {userTypes} from '../Reducers/types';
-import { signIn ,signUp,profileUpdateService } from '../Services/UserService';
+import { signIn ,signUp,profileUpdateService ,signOut} from '../Services/UserService';
 import DataHandler from '../Handlers/DataHandler';
 
 export const UserActions = {
 
     userSignIn,
     userSignUp,
-    profileUpdate
+    profileUpdate,
+    signOutAction
 };
 
 function userSignIn(username, password){
@@ -73,4 +74,27 @@ function profileUpdate(paramdata,id){
     function fail(text){
         return {type: userTypes.PROFILE_UPDATE__FAIL}
     }
+}
+function signOutAction(){
+    return async dispatch => {
+        try {
+            const data = await signOut();
+            console.log(data)
+            DataHandler.setToSession('username', "");
+            DataHandler.setToSession('password', "");
+            dispatch(success());
+        } catch (error) {
+            console.log(error)
+            dispatch(fail({error:"Try Again"}))
+        }
+    };
+
+    function success(data) {
+
+        return {type: userTypes.LOGOUT}
+    }
+    function fail(text){
+        return {type: userTypes.SIGN_IN_FAIL,text}
+    }
+
 }

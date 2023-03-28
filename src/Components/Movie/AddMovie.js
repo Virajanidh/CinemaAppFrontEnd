@@ -90,6 +90,7 @@ function AddMovie() {
         var h=values.duration.$H
         var m=values.duration.$m
         var dur=h+":"+m
+       // console.log(values.fileList)
         const data =
         {
             title: values.movieName,

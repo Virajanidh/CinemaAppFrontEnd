@@ -35,7 +35,7 @@ const siderStyle = {
     textAlign: 'center',
     lineHeight: '120px',
     color: '#1A57BF',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#99a2b2',
 };
 const footerStyle = {
     textAlign: 'center',
@@ -95,7 +95,8 @@ function MovieDashboard() {
                                 title="Add Movie"
                                 visible={isModalVisible}
                                 onCancel={handleModalCancel}
-                                onOk={handleModalOk}
+                                // onOk={handleModalOk}
+                                footer={null} 
                             >
                                 <AddMovie />
                             </Modal>
@@ -137,7 +138,7 @@ function MovieDashboard() {
 
                             <div >
                                 <PlusSquareOutlined style={{ fontSize: '22px', color: '#08c' }} />
-                                <Button type="primary" ghost onClick={handleAddMovieClick}>
+                                <Button type="primary" style={{color:"black"}} ghost onClick={handleAddMovieClick}>
                                     Add movies
                                 </Button>
                             </div>

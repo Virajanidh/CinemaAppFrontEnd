@@ -1,5 +1,5 @@
 
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Breadcrumb, Button, Layout, Menu, theme } from 'antd';
 import { SmileFilled ,HddFilled,IdcardFilled,ContactsFilled,GoldFilled} from '@ant-design/icons';
 //import { Icon } from '@ant-design/compatible';
 import { useState } from 'react';
@@ -8,6 +8,8 @@ import ProfileEdit from './Profile/ProfileEdit';
 import MovieDashboard from './Movie/MovieDashboard';
 import ReservDashboard from './Reservations/ReservDashboard';
 import InventoryDashboard from './Inventory/InventoryDashboard';
+import { useDispatch } from 'react-redux';
+import { UserActions } from '../Actions/UserActions';
 
 const { Header, Content, Footer } = Layout;
 
@@ -20,6 +22,7 @@ function Home() {
 
   const [current, setCurrent] = useState('movie');
   const navigate=useNavigate();
+const dispatch=new useDispatch()
 
  
 
@@ -28,27 +31,24 @@ function Home() {
     setCurrent(e.key);
   };
 
+  const handleLogout=e=>{
+    console.log("logout")
+    dispatch(UserActions.signOutAction());
+    navigate("/")
+  }
+
   return (
     <Layout className="layout">
       <Header>
         <div className="logo" >
-
+        <div style={{position:"relative"}}> <Button style={{position:"absolute",top:0,right:0}} onClick={handleLogout}>Logout</Button></div>
         </div>
         <Menu
           onClick={handleClick} selectedKeys={[current]}
           theme="dark"
           mode="horizontal"
-        // defaultSelectedKeys={['2']}
-        // items={new Array(3).fill(null).map((_, index) => {
-        //   const key = index + 1;
-        //   return {
-        //     key,
-        //     label: `nav ${key}`,
-        //   };
-        // })}
+        
         >
-
-
           <Menu.Item key="movie">
             <GoldFilled  style={{ fontSize: '22px', color: '#08c' }} />Movies</Menu.Item>
           <Menu.Item key="inventoryManagement">
@@ -58,11 +58,15 @@ function Home() {
           <Menu.Item key="profile" >
             <IdcardFilled style={{ fontSize: '22px', color: '#08c' }} /> Profile
           </Menu.Item>
+          
+         
         </Menu>
+
+        
 
       {current=="profile"? <ProfileEdit/>:null}
       {current=="movie"?<MovieDashboard/>:null}
-      {current=="reservation"?<ReservDashboard/>:null}
+      {current=="reservations"?<ReservDashboard/>:null}
       {current=="inventoryManagement"?<InventoryDashboard/>:null}
       
       </Header>

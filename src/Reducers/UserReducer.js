@@ -56,6 +56,12 @@ const UserReducer = (state = initialState, action)=> {
         userInfomation : {},
         signInError:"Email address already exists."
       }
+    case userTypes.LOGOUT:
+        return{
+          signInError:""
+          
+        }
+
     default:
       return state;
   }

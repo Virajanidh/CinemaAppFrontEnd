@@ -1,10 +1,12 @@
-import { Space, Button, Layout, Col, Divider, Row, Modal, Card } from "antd";
+import { Space, Button, Layout, Col, Divider, Row, Modal, Card ,Image} from "antd";
 import { EditOutlined } from '@ant-design/icons';
 import React, { Component } from 'react';
 import EditMovie from "../EditMovie";
 import { useDispatch,useSelector } from "react-redux";
 import { MovieActions } from "../../../Actions/MovieActions";
 import { connect } from 'react-redux';
+import movieImg from '../../../images/movies.jpg';
+
 
 
 export class MovieCard extends Component {
@@ -12,7 +14,8 @@ export class MovieCard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isModalVisible: false
+      isModalVisible: false,
+      imageURL:"https://www.google.com/url?sa=i&url=http%3A%2F%2Fnhrdnmumbai.com%2F10-movies-every-hr-professional-must-watch%2F&psig=AOvVaw2H6-4Pj_P8YN3CdSgUZth6&ust=1680087679175000&source=images&cd=vfe&ved=0CA0QjRxqFwoTCMiEvca8_v0CFQAAAAAdAAAAABAI"
     };
     this.handleAddMovieClick = this.handleAddMovieClick.bind(this)
     this.handleModalCancel =this.handleModalCancel.bind(this)
@@ -47,7 +50,7 @@ export class MovieCard extends Component {
     return (
       <div>
         <Layout>
-          {/* <Space direction="vertical" size={16}> */}
+      
           <Card
             size="small"
             title={oneMovie.title}
@@ -67,11 +70,18 @@ export class MovieCard extends Component {
                             >
                                 <EditMovie movie={oneMovie}/>
                             </Modal>
+            
+                            <Image
+      src={movieImg}
+      width={200}
+      alt="My Image"
+    />
+
             <p>{oneMovie.description}</p>
             <p>Released Date : {oneMovie.releaseDate}</p>
             <p>Language : {oneMovie.language}</p>
             <p>Country : {oneMovie.country}</p>
-            <p>Movie Duration : {oneMovie.movieDuration} </p>
+            <p>Movie Duration(h:m) : {oneMovie.movieDuration} </p>
 
           </Card>
           {/* </Space> */}

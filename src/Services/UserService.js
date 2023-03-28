@@ -67,4 +67,26 @@ export const signIn = async (username,password) => {
       throw new Error(error);
     }
   }
+
+  export const signOut = async (data) => {
+
+    
+      
+      const queryString = new URLSearchParams(data).toString();
+    try {
+      const response = await fetch('http://localhost:8080/user/logout', {
+        method: 'POST',
+        // headers: {
+        //   'Content-Type': 'application/json',
+        //   'Authorization': `Basic ${btoa(`${username}:${password}`)}`,
+        // },
+        headers:APIHandler.getHeaderWithPasswordAuth(),
+      });
+      const resdata = await response.json();
+      return resdata;
+    } catch (error) {
+      throw new Error(error);
+    }
+  };
+
   
