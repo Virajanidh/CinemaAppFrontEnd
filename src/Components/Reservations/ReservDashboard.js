@@ -31,7 +31,7 @@ const siderStyle = {
   textAlign: 'center',
   lineHeight: '120px',
   color: '#1A57BF',
-  backgroundColor: '#FFFFFF',
+  backgroundColor: '#99a2b2',
 };
 const footerStyle = {
   textAlign: 'center',

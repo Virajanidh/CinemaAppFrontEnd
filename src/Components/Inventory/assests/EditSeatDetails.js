@@ -114,26 +114,27 @@ function EditSeatDetails(props) {
           onChange={(e) => handleCellChange(record, 3, e.target.value)}
         />
       ),
-    },
-    {
-        title:"Action",
-        dataIndex:"action",
-        render:(text, record) => (
-          <Button onClick={() => handleRowSave(record)}>Save</Button>
-        )
     }
+    // ,
+    // {
+    //     title:"Action",
+    //     dataIndex:"action",
+    //     render:(text, record) => (
+    //       <Button onClick={() => handleRowSave(record)}>Save</Button>
+    //     )
+    // }
 
   ];
 
   return (
     <Table columns={columns} dataSource={dataArray} rowKey="id" pagination={false} scroll={{ y: 500 }}>
-      <Column
+      {/* <Column
         title="Action"
         dataIndex="action"
         render={(text, record) => (
           <Button onClick={() => handleRowSave(record)}>Save</Button>
         )}
-      />
+      /> */}
     </Table>
   );
 }

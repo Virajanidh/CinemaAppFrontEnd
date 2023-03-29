@@ -15,7 +15,8 @@ import {
     Tag,
     Typography,
     Calendar,
-    Alert
+    Alert,
+    message
 } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { UserActions } from '../../Actions/UserActions';
@@ -27,6 +28,8 @@ import CustomCalendar from './assets/CustomCalender';
 import ShowCustomCalendar from './assets/ShowCustomCalender';
 import ShowTimes from './assets/ShowTimes';
 import { MovieActions } from '../../Actions/MovieActions';
+import { storage } from "../../firebase";
+import {db} from "../../firebase";
 
 
 const { Text } = Typography;
@@ -71,8 +74,10 @@ function AddMovie() {
     const [releaseDate,setReleaseDate]=useState("");
     const [showArray,setShowArray]=useState([]);
     const [showTimeArray,setShowTimeArray]=useState([]);
+    const [downloadURL,setdownloadURL]=useState("");
    // const [duration, setDuration] = useState(null);
     const { isSignIn, signInError,userInfomation } = useSelector((state) => state.user)
+
   
 
     const dispatch = useDispatch();
@@ -90,7 +95,7 @@ function AddMovie() {
         var h=values.duration.$H
         var m=values.duration.$m
         var dur=h+":"+m
-       // console.log(values.fileList)
+       console.log(downloadURL)
         const data =
         {
             title: values.movieName,
@@ -107,11 +112,12 @@ function AddMovie() {
             //     date:
             // },
             currentCinemaUserid: userInfomation.cinemaId,
-            movieDuration:dur
+            movieDuration:dur,
+            imgUrl:downloadURL
         }
         console.log(data)
-       dispatch(MovieActions.addMovie(data))
-       dispatch(MovieActions.getMovies(userInfomation.cinemaId))
+        dispatch(MovieActions.addMovie(data))
+        dispatch(MovieActions.getMovies(userInfomation.cinemaId))
 
 
     }
@@ -130,7 +136,51 @@ function AddMovie() {
         const newArray=[...showTimeArray,newElement]
         setShowTimeArray(newArray)
     }
+    const beforeUpload = (file) => {
+        // You can add additional file validation here if needed, like checking file size or type
+        handleUpload(file);
+        return false; // Return false to prevent Ant Design's default file upload behavior
+      };
+      
+      //const storage = firebase.storage();
+      const storageRef = storage.ref();
 
+    const handleUpload = async (file) => {
+        // try {
+        //   const snapshot = await storageRef.child(file.name).put(file.originFileObj);
+        //   const downloadUrl = await snapshot.ref.getDownloadURL();
+        //   setdownloadURL(downloadUrl)
+        //   console.log("File uploaded successfully:", downloadUrl);
+        //   // You can do something with the downloadUrl, like saving it to your database or showing it in your UI
+        // } catch (error) {
+        //   console.error("Error uploading file:", error);
+        //   message.error("Error uploading file");
+        // }
+        const caseId="C001"
+        const uploadTask = storage.ref(`Cases/${caseId}/${file.name}`).put(file);
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            //
+            const prog = Math.round(
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            
+          },
+          (error) => console.log(error),
+          () => {
+            storage
+              .ref("Cases")
+              .child(caseId)
+              .child(file.name)
+              .getDownloadURL()
+              .then((url) => {
+                console.log(url);
+                setdownloadURL(url)
+              });
+          }
+        );
+      };
     return (
         <div>
 
@@ -290,7 +340,11 @@ function AddMovie() {
 
 
                         <Form.Item label="Upload" valuePropName="fileList">
-                            <Upload action="/upload.do" listType="picture-card">
+                            <Upload 
+                            action="/upload.do"
+                            listType="picture-card"
+                            beforeUpload={beforeUpload}
+                            >
                                 <div>
                                     {/* <PlusOutlined /> */}
                                     <div style={{ marginTop: 8 }}>Upload</div>

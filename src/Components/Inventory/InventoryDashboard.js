@@ -63,7 +63,7 @@ function InventoryDashboard() {
   const dispatch=useDispatch();
   useEffect(() => {
     dispatch(SeatActions.getSeat(userInfomation.cinemaId))
-}, []);
+});
 
 
   return (

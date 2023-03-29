@@ -34,7 +34,7 @@ const columns = [
     dataIndex: 2,
   },
   {
-    title: 'Price (Rs)',
+    title: 'Price ($)',
     dataIndex: 3,
   },
 ];
