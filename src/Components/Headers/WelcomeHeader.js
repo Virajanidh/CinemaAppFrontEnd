@@ -8,7 +8,7 @@ return(
     <div >
        <Header>
               <div className="logo" />
-              Header
+              Welcome !!
             </Header>
         </div>
 )

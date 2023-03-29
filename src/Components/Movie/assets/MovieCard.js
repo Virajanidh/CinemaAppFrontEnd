@@ -63,7 +63,7 @@ export class MovieCard extends Component {
           // }}
           >
             <Modal
-              title={oneMovie.title}
+             // title={oneMovie.title}
               visible={this.state.isModalVisible}
               onCancel={this.handleModalCancel}
               //onOk={this.handleModalOk}

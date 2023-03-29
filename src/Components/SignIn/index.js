@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Checkbox, Form, Input, Typography, Card, Space } from 'antd';
+import { Button, Checkbox, Form, Input, Typography, Card, Space , Image} from 'antd';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { UserActions } from "../../Actions/UserActions";
@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import Home from "../Home";
 
 const { Text } = Typography;
+const welcomeImg="https://firebasestorage.googleapis.com/v0/b/smart-door-ded99.appspot.com/o/Cases%2FC001%2Fcienma3?alt=media&token=167a3287-0570-4efe-a2df-3c390cf77209"
 
 function SignIn() {
 
@@ -39,7 +40,7 @@ function SignIn() {
 
       <div style={cardContainerStyle}>
         <Space direction="vertical" size={30} align="center">
-
+          <Image src={welcomeImg}/>
           <Card
             title="Login"
             extra={<a href="/signup">Create Account</a>}

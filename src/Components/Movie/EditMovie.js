@@ -85,7 +85,7 @@ function EditMovie(props) {
     const { isSignIn, signInError, userInfomation } = useSelector((state) => state.user)
     const [isShowDayChange, setShowdayChange] = useState(false)
     const [isRelDateChange, setRelDateChange] = useState(false)
-    const [downloadURL,setdownloadURL]=useState("");
+    const [downloadURL,setdownloadURL]=useState(props.movie.imgUrl);
 
 
     const dispatch = useDispatch();
@@ -117,6 +117,8 @@ function EditMovie(props) {
         else {
             var rel = props.movie.releaseDate
         }
+
+        
 
         const data =
         {

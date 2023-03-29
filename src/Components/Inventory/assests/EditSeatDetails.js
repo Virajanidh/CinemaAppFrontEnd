@@ -106,7 +106,7 @@ function EditSeatDetails(props) {
       ),
     },
     {
-      title: 'Price (Rs)',
+      title: 'Price ($)',
       dataIndex: 3,
       render: (price, record) => (
         <Input
